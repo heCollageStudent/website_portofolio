@@ -1,76 +1,87 @@
+import 'package:dynamic_path_url_strategy/dynamic_path_url_strategy.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:website_portofolio/core/route.dart';
+import 'core/palette.dart';
+import 'sections/header.dart';
+import 'sections/hero.dart';
 
 void main() {
-  runApp(const MyApp());
+  setPathUrlStrategy();
+  runApp(const PortfolioApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class PortfolioApp extends StatelessWidget {
+  const PortfolioApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+    return MaterialApp.router(
+      routerConfig: router,
+      title: 'Dirsa – Portfolio',
+      debugShowCheckedModeBanner: false,
+      scrollBehavior: const MaterialScrollBehavior().copyWith(
+        dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      theme: ThemeData(
+        fontFamily: 'Inter',
+        scaffoldBackgroundColor: Palette.bg,
+      ),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+class PortfolioHome extends StatefulWidget {
+  const PortfolioHome({super.key, this.initialSection});
+  final String? initialSection;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<PortfolioHome> createState() => _PortfolioHomeState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _PortfolioHomeState extends State<PortfolioHome> {
+  String activeId = 'home';
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  void _resetCounter() {
-    setState(() {
-      _counter = 0;
-    });
-  }
+  final _scrollC = ScrollController();
+  final Map<String, GlobalKey> _keys = {
+    'home': GlobalKey(),
+    'about': GlobalKey(),
+    'process': GlobalKey(),
+    'experience': GlobalKey(),
+    'portfolio': GlobalKey(),
+    'skills': GlobalKey(),
+    'blog': GlobalKey(),
+    'services': GlobalKey(),
+  };
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+      extendBodyBehindAppBar: true,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70),
+        child: Header(activeId: activeId),
       ),
-      body: Center(
+      body: SingleChildScrollView(
+        controller: _scrollC,
+        physics: const ClampingScrollPhysics(),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            ElevatedButton(
-              onPressed: _resetCounter,
-              child: const Text('Reset Counter'),
-            ),
+          children: [
+            _Wrap(key: _keys['home'], child: const HeroSection()),
+            // AboutSection(),
+            // ExperienceSection(),
+            // PortfolioSection(),
+            // dll…
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
     );
   }
+}
+
+class _Wrap extends StatelessWidget {
+  const _Wrap({super.key, required this.child});
+  final Widget child;
+  @override
+  Widget build(BuildContext context) => child;
 }
