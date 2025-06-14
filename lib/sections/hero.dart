@@ -60,7 +60,7 @@ class HeroSection extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          "NEMANJA TOSIC",
+          "DHIRSYA",
           style: Theme.of(context).textTheme.displaySmall?.copyWith(
             fontWeight: FontWeight.w900,
             letterSpacing: -1,
@@ -91,7 +91,7 @@ class HeroSection extends StatelessWidget {
   }
 
   Widget _buildAvatar() => CachedNetworkImage(
-    imageUrl: 'assets/bitmoji.jpg', // URL foto kamu
+    imageUrl: 'assets/head-avatar.jpg',
     width: 320,
     fit: BoxFit.cover,
     placeholder: (_, __) => const SizedBox(
@@ -100,7 +100,7 @@ class HeroSection extends StatelessWidget {
       child: CircularProgressIndicator(),
     ),
     errorWidget: (_, __, ___) =>
-        Image.asset('assets/bitmoji.jpg', width: 320, fit: BoxFit.contain),
+        Image.asset('assets/head-avatar.jpg', width: 320, fit: BoxFit.contain),
   );
 
   Widget _buildStats(bool vertical) {

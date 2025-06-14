@@ -1,27 +1,27 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 import '../core/palette.dart';
 import '../core/responsive.dart';
-import '../widgets/primary_button.dart';
 
 class Header extends StatelessWidget implements PreferredSizeWidget {
-  const Header({super.key, required this.activeId});
+  const Header({
+    super.key,
+    required this.activeId,
+    required this.onSectionSelected,
+  });
 
-  /// id section yang sedang aktif –> dipakai untuk highlight menu
   final String activeId;
+  final void Function(String id) onSectionSelected;
 
-  /// Daftar menu (teks, id anchor)
   static const List<(String text, String id)> _menus = [
     ('Home', 'home'),
-    ('About', 'about'),
-    ('Process', 'process'),
     ('Experience', 'experience'),
     ('Portfolio', 'portfolio'),
     ('Skills', 'skills'),
-    ('Blog', 'blog'),
     ('Services', 'services'),
+    ('Contact', 'contact'),
   ];
 
   @override
@@ -30,78 +30,138 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Responsive.isDesktop(context)
-        ? _DesktopHeader(menus: _menus, activeId: activeId)
-        : _MobileHeader(menus: _menus, activeId: activeId);
+        ? _DesktopHeader(
+            menus: _menus,
+            activeId: activeId,
+            onSectionSelected: onSectionSelected,
+          )
+        : _MobileHeader(
+            menus: _menus,
+            activeId: activeId,
+            onSectionSelected: onSectionSelected,
+          );
   }
 }
 
-/* -------------------------------------------------------------------------- */
-/*                                DESKTOP BAR                                 */
-/* -------------------------------------------------------------------------- */
-
 class _DesktopHeader extends StatelessWidget {
-  const _DesktopHeader({required this.menus, required this.activeId});
+  const _DesktopHeader({
+    required this.menus,
+    required this.activeId,
+    required this.onSectionSelected,
+  });
 
   final List<(String, String)> menus;
   final String activeId;
+  final void Function(String id) onSectionSelected;
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: Colors.white.withOpacity(0.9),
-      elevation: 0,
-      titleSpacing: 32,
-      title: Row(
-        children: [
-          const CircleAvatar(
-            radius: 18,
-            backgroundColor: Color(0xFF7B3FFF),
-            child: Text('N', style: TextStyle(color: Colors.white)),
-          ),
-          const SizedBox(width: 10),
-          Text(
-            'Nemanja',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
+    return PreferredSize(
+      preferredSize: const Size.fromHeight(70),
+      child: ClipRRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+          child: Container(
+            height: 70,
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.15),
+              border: const Border(
+                bottom: BorderSide(color: Colors.white24, width: 1),
+              ),
             ),
-          ),
-        ],
-      ),
-      actions: [
-        for (final item in menus)
-          TextButton(
-            onPressed: () => context.go('/?s=${item.$2}'),
-            style: TextButton.styleFrom(
-              foregroundColor: activeId == item.$2
-                  ? Palette.primary
-                  : Colors.black87,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Logo kiri
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 18,
+                      backgroundColor: Colors.black,
+                      child: ClipOval(
+                        child: CachedNetworkImage(
+                          imageUrl: "assets/head-avatar.jpg",
+                          fit: BoxFit.cover,
+                          width: 36,
+                          height: 36,
+                          placeholder: (_, __) =>
+                              const CircularProgressIndicator.adaptive(),
+                          errorWidget: (_, __, ___) => const Icon(Icons.person),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      "DIRFO",
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ],
+                ),
+
+                // Menu kanan
+                Row(
+                  children: [
+                    for (final item in menus)
+                      InkWell(
+                        onTap: () => onSectionSelected(item.$2),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 6,
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                item.$1,
+                                style: TextStyle(
+                                  color: activeId == item.$2
+                                      ? Colors.black
+                                      : Colors.black87,
+                                  fontWeight: activeId == item.$2
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              AnimatedContainer(
+                                duration: const Duration(milliseconds: 300),
+                                height: 2,
+                                width: activeId == item.$2 ? 24 : 0,
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(1),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ],
             ),
-            child: Text(item.$1),
-          ),
-        const SizedBox(width: 12),
-        Padding(
-          padding: const EdgeInsets.only(right: 32),
-          child: PrimaryButton(
-            label: 'Contact',
-            onPressed: () =>
-                launchUrl(Uri.parse('mailto:hello@yourdomain.com')),
           ),
         ),
-      ],
+      ),
     );
   }
 }
 
-/* -------------------------------------------------------------------------- */
-/*                                 MOBILE BAR                                 */
-/* -------------------------------------------------------------------------- */
-
 class _MobileHeader extends StatelessWidget {
-  const _MobileHeader({required this.menus, required this.activeId});
+  const _MobileHeader({
+    required this.menus,
+    required this.activeId,
+    required this.onSectionSelected,
+  });
 
   final List<(String, String)> menus;
   final String activeId;
+  final void Function(String id) onSectionSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -110,26 +170,30 @@ class _MobileHeader extends StatelessWidget {
       elevation: 1,
       title: Row(
         children: [
-          const CircleAvatar(
-            radius: 16,
-            backgroundColor: Color(0xFF7B3FFF),
-            child: Text('N', style: TextStyle(color: Colors.white)),
+          CircleAvatar(
+            radius: 18,
+            backgroundColor: Colors.black,
+            child: ClipOval(
+              child: CachedNetworkImage(
+                imageUrl: "assets/head-avatar.jpg",
+                fit: BoxFit.cover,
+                width: 36,
+                height: 36,
+                placeholder: (_, __) =>
+                    const CircularProgressIndicator.adaptive(),
+                errorWidget: (_, __, ___) => const Icon(Icons.person),
+              ),
+            ),
           ),
           const SizedBox(width: 8),
-          const Text('Nemanja', style: TextStyle(color: Colors.black87)),
+          const Text('DIRFO', style: TextStyle(color: Colors.black87)),
         ],
       ),
       iconTheme: const IconThemeData(color: Colors.black87),
       actions: [
         PopupMenuButton<String>(
           icon: const Icon(Icons.menu),
-          onSelected: (value) {
-            if (value == 'contact') {
-              launchUrl(Uri.parse('mailto:hello@yourdomain.com'));
-            } else {
-              context.go('/?s=$value');
-            }
-          },
+          onSelected: onSectionSelected,
           itemBuilder: (_) => [
             ...menus.map(
               (e) => PopupMenuItem(
@@ -142,8 +206,6 @@ class _MobileHeader extends StatelessWidget {
                 ),
               ),
             ),
-            const PopupMenuDivider(),
-            const PopupMenuItem(value: 'contact', child: Text('Contact')),
           ],
         ),
       ],
