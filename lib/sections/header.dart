@@ -81,10 +81,8 @@ class _DesktopHeader extends StatelessWidget {
                       backgroundColor: Colors.black,
                       child: ClipOval(
                         child: CachedNetworkImage(
-                          imageUrl: "assets/head-avatar.jpg",
+                          imageUrl: 'assets/head-avatar.jpg',
                           fit: BoxFit.cover,
-                          width: 36,
-                          height: 36,
                           placeholder: (_, __) =>
                               const CircularProgressIndicator.adaptive(),
                           errorWidget: (_, __, ___) => const Icon(Icons.person),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:website_portofolio/core/route.dart';
 import 'package:website_portofolio/core/palette.dart';
 import 'package:website_portofolio/sections/contact.dart';
+import 'package:website_portofolio/sections/education_experience.dart';
 import 'package:website_portofolio/sections/header.dart';
 import 'package:website_portofolio/sections/hero.dart';
 
@@ -50,8 +51,6 @@ class _PortfolioHomeState extends State<PortfolioHome> {
     'experience': GlobalKey(),
     'portfolio': GlobalKey(),
     'skills': GlobalKey(),
-    'blog': GlobalKey(),
-    'services': GlobalKey(),
   };
 
   @override
@@ -91,6 +90,7 @@ class _PortfolioHomeState extends State<PortfolioHome> {
         context,
         duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOut,
+        alignment: 0.1,
       );
       setState(() {
         activeId = id;
@@ -112,8 +112,12 @@ class _PortfolioHomeState extends State<PortfolioHome> {
         child: Column(
           children: [
             _Wrap(key: _keys['home'], child: const HeroSection()),
+            _Wrap(
+              key: _keys['experience'],
+              child: EducationExperienceSection(),
+            ),
+
             _Wrap(key: _keys['contact'], child: const ContactSection()),
-            // Tambah section lain di sini jika ada...
           ],
         ),
       ),

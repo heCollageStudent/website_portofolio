@@ -13,6 +13,11 @@ class Palette {
     end: Alignment.bottomRight,
     colors: [dustyBlue, bg, grayLight, dustyBlue],
   );
+  static const LinearGradient experienceGradient = LinearGradient(
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+    colors: [dustyBlue, bg, bg, bg, grayLight, grayLight, grayLight, dustyBlue],
+  );
   static const LinearGradient contactGradient = LinearGradient(
     begin: Alignment.bottomLeft,
     end: Alignment.topRight,

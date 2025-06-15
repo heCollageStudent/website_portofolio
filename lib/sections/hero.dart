@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:website_portofolio/widgets/primary_button.dart';
+import 'package:website_portofolio/widgets/animated_entrance.dart';
 import 'package:website_portofolio/widgets/stat_card.dart';
 
 import '../core/palette.dart';
@@ -51,40 +50,41 @@ class HeroSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "Hello, I’m",
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
+        FadeInUp(
+          child: Text(
+            "Hello, I’m",
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
           ),
         ),
         const SizedBox(height: 4),
-        Text(
-          "DHIRSYA",
-          style: Theme.of(context).textTheme.displaySmall?.copyWith(
-            fontWeight: FontWeight.w900,
-            letterSpacing: -1,
-            color: Colors.black87,
+        FadeInUp(
+          child: Text(
+            "DHIRSYA",
+            style: Theme.of(context).textTheme.displaySmall?.copyWith(
+              fontWeight: FontWeight.w900,
+              letterSpacing: -1,
+              color: Colors.black87,
+            ),
           ),
         ),
         const SizedBox(height: 24),
-        SizedBox(
-          width: 480,
-          child: Text(
-            "I am a Full Stack Developer with 8 years of development "
-            "experience. Expertise spans JS/TS, React, Angular, Vue, "
-            "Express, Laravel, PostgreSQL, and proficiency in AWS & Azure. "
-            "Adapting rapidly and mastering new technologies, frameworks, "
-            "and tools autonomously, even in the absence of hands-on supervision.",
-            style: Theme.of(context).textTheme.bodyLarge,
+        FadeInLeft(
+          child: SizedBox(
+            width: 480,
+            child: Text(
+              "I am a Full Stack Developer with 8 years of development "
+              "experience. Expertise spans JS/TS, React, Angular, Vue, "
+              "Express, Laravel, PostgreSQL, and proficiency in AWS & Azure. "
+              "Adapting rapidly and mastering new technologies, frameworks, "
+              "and tools autonomously, even in the absence of hands-on supervision.",
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
           ),
         ),
         const SizedBox(height: 32),
-        PrimaryButton(
-          label: "Say Hello!",
-          onPressed: () => launchUrl(Uri.parse("mailto:hello@domain.com")),
-        ),
-        const SizedBox(height: 48),
         _buildStats(false),
       ],
     );
