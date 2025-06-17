@@ -1,15 +1,21 @@
 import 'package:dynamic_path_url_strategy/dynamic_path_url_strategy.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:website_portofolio/core/route.dart';
 import 'package:website_portofolio/core/palette.dart';
+import 'package:website_portofolio/core/web_context_menu_blocker.dart';
+import 'package:website_portofolio/data/certification_data.dart';
+import 'package:website_portofolio/sections/certifications.dart';
 import 'package:website_portofolio/sections/contact.dart';
 import 'package:website_portofolio/sections/education_experience.dart';
+import 'package:website_portofolio/sections/footer.dart';
 import 'package:website_portofolio/sections/header.dart';
 import 'package:website_portofolio/sections/hero.dart';
 
 void main() {
   setPathUrlStrategy();
+  if (kIsWeb) disableContextMenu();
   runApp(const PortfolioApp());
 }
 
@@ -47,10 +53,10 @@ class _PortfolioHomeState extends State<PortfolioHome> {
   final _scrollC = ScrollController();
   final Map<String, GlobalKey> _keys = {
     'home': GlobalKey(),
-    'contact': GlobalKey(),
     'experience': GlobalKey(),
     'portfolio': GlobalKey(),
-    'skills': GlobalKey(),
+    'certificate': GlobalKey(),
+    'contact': GlobalKey(),
   };
 
   @override
@@ -114,10 +120,49 @@ class _PortfolioHomeState extends State<PortfolioHome> {
             _Wrap(key: _keys['home'], child: const HeroSection()),
             _Wrap(
               key: _keys['experience'],
-              child: EducationExperienceSection(),
+              child: const EducationExperienceSection(),
             ),
-
+            _Wrap(
+              key: _keys['certificate'],
+              child: CertificateSection(
+                certificates: [
+                  CertificateData(
+                    imageUrl: 'assets/certif/certif-bnsp-mobile.webp',
+                    title: 'Junior Mobile Programmer',
+                    description:
+                        'Badan Nasional Sertifikasi Profesi (BNSP) • Okt 2024',
+                  ),
+                  CertificateData(
+                    imageUrl: 'assets/certif/certif-dev-mobile.webp',
+                    title: 'Android Dev Certification',
+                    description:
+                        'Dev Certification for Android (DCA) • Jan 2025',
+                  ),
+                  CertificateData(
+                    imageUrl: 'assets/certif/certif-bangkit.webp',
+                    title: 'Certificate of Completion - Distinction Graduate',
+                    description: 'Bangkit Academy • Jul 2024',
+                  ),
+                  CertificateData(
+                    imageUrl: 'assets/certif/certif-android-inter.webp',
+                    title: 'Intermediate Android Application Development',
+                    description: 'Dicoding Indonesia • May 2024',
+                  ),
+                  CertificateData(
+                    imageUrl: 'assets/certif/certif-funda-android.webp',
+                    title: 'Fundamentals of Android Application Development',
+                    description: 'Dicoding Indonesia • Mar 2024',
+                  ),
+                  CertificateData(
+                    imageUrl: 'assets/certif/certif-ml-android.webp',
+                    title: 'Application of Machine Learning for Android',
+                    description: 'Dicoding Indonesia • Apr 2024',
+                  ),
+                ],
+              ),
+            ),
             _Wrap(key: _keys['contact'], child: const ContactSection()),
+            FooterSection(),
           ],
         ),
       ),

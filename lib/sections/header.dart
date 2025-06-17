@@ -19,8 +19,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
     ('Home', 'home'),
     ('Experience', 'experience'),
     ('Portfolio', 'portfolio'),
-    ('Skills', 'skills'),
-    ('Services', 'services'),
+    ('Certificate', 'certificate'),
     ('Contact', 'contact'),
   ];
 
@@ -81,7 +80,7 @@ class _DesktopHeader extends StatelessWidget {
                       backgroundColor: Colors.black,
                       child: ClipOval(
                         child: CachedNetworkImage(
-                          imageUrl: 'assets/head-avatar.jpg',
+                          imageUrl: 'assets/head-avatar.webp',
                           fit: BoxFit.cover,
                           placeholder: (_, __) =>
                               const CircularProgressIndicator.adaptive(),
