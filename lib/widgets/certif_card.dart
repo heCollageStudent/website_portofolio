@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CertificateCard extends StatefulWidget {
@@ -30,7 +29,7 @@ class _CertificateCardState extends State<CertificateCard> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           image: DecorationImage(
-            image: CachedNetworkImageProvider(widget.imageUrl),
+            image: AssetImage(widget.imageUrl),
             fit: BoxFit.cover,
             colorFilter: isHovering
                 ? ColorFilter.mode(

@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../core/palette.dart';
 import '../core/responsive.dart';
@@ -79,12 +78,9 @@ class _DesktopHeader extends StatelessWidget {
                       radius: 18,
                       backgroundColor: Colors.black,
                       child: ClipOval(
-                        child: CachedNetworkImage(
-                          imageUrl: 'assets/head-avatar.webp',
+                        child: Image.asset(
+                          'assets/head-avatar.webp',
                           fit: BoxFit.cover,
-                          placeholder: (_, __) =>
-                              const CircularProgressIndicator.adaptive(),
-                          errorWidget: (_, __, ___) => const Icon(Icons.person),
                         ),
                       ),
                     ),
@@ -171,14 +167,11 @@ class _MobileHeader extends StatelessWidget {
             radius: 18,
             backgroundColor: Colors.black,
             child: ClipOval(
-              child: CachedNetworkImage(
-                imageUrl: "assets/head-avatar.jpg",
+              child: Image.asset(
+                'assets/head-avatar.jpg',
                 fit: BoxFit.cover,
                 width: 36,
                 height: 36,
-                placeholder: (_, __) =>
-                    const CircularProgressIndicator.adaptive(),
-                errorWidget: (_, __, ___) => const Icon(Icons.person),
               ),
             ),
           ),

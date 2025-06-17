@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:website_portofolio/widgets/animated_entrance.dart';
 import 'package:website_portofolio/widgets/stat_card.dart';
@@ -90,17 +89,11 @@ class HeroSection extends StatelessWidget {
     );
   }
 
-  Widget _buildAvatar() => CachedNetworkImage(
-    imageUrl: 'assets/head-avatar.jpg',
+  Widget _buildAvatar() => Image.asset(
+    'assets/head-avatar.webp',
     width: 320,
+    height: 320,
     fit: BoxFit.cover,
-    placeholder: (_, __) => const SizedBox(
-      width: 320,
-      height: 320,
-      child: CircularProgressIndicator(),
-    ),
-    errorWidget: (_, __, ___) =>
-        Image.asset('assets/head-avatar.jpg', width: 320, fit: BoxFit.contain),
   );
 
   Widget _buildStats(bool vertical) {
