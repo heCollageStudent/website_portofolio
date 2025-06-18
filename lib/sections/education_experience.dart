@@ -13,7 +13,7 @@ class EducationExperienceSection extends StatelessWidget {
     final bool isMobile = Responsive.isMobile(context);
 
     return Container(
-      decoration: const BoxDecoration(gradient: Palette.experienceGradient),
+      decoration: const BoxDecoration(gradient: Palette.evenSection),
       child: Padding(
         padding: EdgeInsets.symmetric(
           vertical: isMobile ? 48 : 96,

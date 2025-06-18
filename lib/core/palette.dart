@@ -8,9 +8,14 @@ class Palette {
   static const Color dustyBlue = Color.fromARGB(255, 217, 234, 253);
   static const Color grayLight = Color.fromARGB(255, 243, 242, 242);
 
-  static const LinearGradient heroGradient = LinearGradient(
+  static const LinearGradient oddSection = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
+    colors: [dustyBlue, bg, grayLight, dustyBlue],
+  );
+  static const LinearGradient evenSection = LinearGradient(
+    begin: Alignment.bottomLeft,
+    end: Alignment.topRight,
     colors: [dustyBlue, bg, grayLight, dustyBlue],
   );
   static const LinearGradient experienceGradient = LinearGradient(

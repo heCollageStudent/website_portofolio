@@ -17,7 +17,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
   static const List<(String text, String id)> _menus = [
     ('Home', 'home'),
     ('Experience', 'experience'),
-    ('Portfolio', 'portfolio'),
+    ('Portofolio', 'portofolio'),
     ('Certificate', 'certificate'),
     ('Contact', 'contact'),
   ];

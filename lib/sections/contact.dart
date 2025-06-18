@@ -41,7 +41,7 @@ class _ContactSectionState extends State<ContactSection>
     final bool isMobile = Responsive.isMobile(context);
 
     return Container(
-      decoration: const BoxDecoration(gradient: Palette.contactGradient),
+      decoration: const BoxDecoration(gradient: Palette.oddSection),
       width: double.infinity,
       child: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),

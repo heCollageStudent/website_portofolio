@@ -12,6 +12,7 @@ import 'package:website_portofolio/sections/education_experience.dart';
 import 'package:website_portofolio/sections/footer.dart';
 import 'package:website_portofolio/sections/header.dart';
 import 'package:website_portofolio/sections/hero.dart';
+import 'package:website_portofolio/sections/portofolios.dart';
 
 void main() {
   setPathUrlStrategy();
@@ -54,7 +55,7 @@ class _PortfolioHomeState extends State<PortfolioHome> {
   final Map<String, GlobalKey> _keys = {
     'home': GlobalKey(),
     'experience': GlobalKey(),
-    'portfolio': GlobalKey(),
+    'portofolio': GlobalKey(),
     'certificate': GlobalKey(),
     'contact': GlobalKey(),
   };
@@ -122,6 +123,7 @@ class _PortfolioHomeState extends State<PortfolioHome> {
               key: _keys['experience'],
               child: const EducationExperienceSection(),
             ),
+            _Wrap(key: _keys['portofolio'], child: const PortfolioSection()),
             _Wrap(
               key: _keys['certificate'],
               child: CertificateSection(

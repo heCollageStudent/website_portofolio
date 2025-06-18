@@ -13,7 +13,7 @@ class HeroSection extends StatelessWidget {
     final bool isMobile = Responsive.isMobile(context);
 
     return Container(
-      decoration: const BoxDecoration(gradient: Palette.heroGradient),
+      decoration: const BoxDecoration(gradient: Palette.oddSection),
       padding: EdgeInsets.symmetric(
         vertical: isMobile ? 48 : 96,
         horizontal: isMobile ? 24 : 120,
