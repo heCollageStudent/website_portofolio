@@ -48,7 +48,9 @@ class PortfolioSection extends StatelessWidget {
                   category: item['category'] ?? '',
                   tags: List<String>.from(item['tags'] ?? []),
                   onView: () => launchUrl(Uri.parse(item['url'] ?? '')),
+                  url: item['url'] ?? '',
                   description: item['description'] ?? '',
+                  extraInfo: item['extraInfo'],
                   features:
                       (item['features'] != null && item['features'] is List)
                       ? (item['features'] as List)

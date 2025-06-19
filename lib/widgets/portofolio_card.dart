@@ -9,6 +9,8 @@ class PortofolioCard extends StatefulWidget {
   final List<String> tags;
   final VoidCallback onView;
   final List<String> features;
+  final String url;
+  final String? extraInfo;
 
   const PortofolioCard({
     super.key,
@@ -19,6 +21,7 @@ class PortofolioCard extends StatefulWidget {
     required this.onView,
     required this.category,
     required this.features,
+    required this.url, this.extraInfo,
   });
 
   @override
@@ -74,6 +77,8 @@ class _PortofolioCardState extends State<PortofolioCard> {
                       style: theme.textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 4),
                     Text(
@@ -93,18 +98,22 @@ class _PortofolioCardState extends State<PortofolioCard> {
                           (tag) => Chip(
                             label: Text(
                               tag,
-                              style: const TextStyle(fontSize: 9),
+                              style: const TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
-                            backgroundColor:
-                                theme.colorScheme.surfaceContainerHighest,
+                            backgroundColor: Colors.grey.shade300,
                             shape: const StadiumBorder(),
                             side: BorderSide.none,
-                            labelPadding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                            labelPadding: const EdgeInsets.symmetric(
+                              horizontal: 4,
+                              vertical: 2,
+                            ),
                           ),
                         ),
                         if (!showAllTags && hiddenCount > 0)
                           GestureDetector(
-                            onTap: () => setState(() => showAllTags = true),
                             child: Chip(
                               label: Text('+$hiddenCount more'),
                               backgroundColor: Colors.grey.shade300,
@@ -114,28 +123,48 @@ class _PortofolioCardState extends State<PortofolioCard> {
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
                               ),
-                              labelPadding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                              labelPadding: const EdgeInsets.symmetric(
+                                horizontal: 4,
+                                vertical: 2,
+                              ),
                             ),
                           ),
                       ],
                     ),
                     const Spacer(),
-                    TextButton.icon(
-                      onPressed: () => showPortfolioDetailDialog(
-                        context: context,
-                        imagePath: widget.imagePath,
-                        title: widget.title,
-                        category: widget.category,
-                        description: widget.description,
-                        tags: widget.tags,
-                        features: widget.features,
-                        onViewCode: widget.onView,
-                      ),
-                      icon: const Icon(Icons.arrow_forward, size: 16),
-                      label: const Text("View Details"),
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        textStyle: const TextStyle(fontSize: 13),
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton.icon(
+                        onPressed: () => showPortfolioDetailDialog(
+                          context: context,
+                          imagePath: widget.imagePath,
+                          title: widget.title,
+                          category: widget.category,
+                          description: widget.description,
+                          tags: widget.tags,
+                          features: widget.features,
+                          extraInfo: widget.extraInfo,
+                          onViewCode: widget.url.isNotEmpty
+                              ? widget.onView
+                              : null,
+                        ),
+                        icon: const Icon(
+                          Icons.arrow_forward,
+                          size: 16,
+                          color: Colors.white,
+                        ),
+                        label: Text(
+                          "View Details",
+                          style: theme.textTheme.labelLarge?.copyWith(
+                            fontWeight: FontWeight.w900,
+                            color: Colors.white,
+                          ),
+                        ),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: Colors.black,
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                        ),
                       ),
                     ),
                   ],
